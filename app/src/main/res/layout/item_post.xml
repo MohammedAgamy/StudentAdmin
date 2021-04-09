@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_prof"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_profile"
+        app:layout_constraintLeft_toRightOf="@id/image_profile"
+        app:layout_constraintTop_toTopOf="@id/image_profile" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="5:20"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_profile"
+        app:layout_constraintLeft_toRightOf="@id/image_profile"
+        app:layout_constraintTop_toBottomOf="@id/name_user" />
+
+    <TextView
+        android:id="@+id/post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="25sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_profile" />
+
+
+
+
+
+        <ImageView
+            android:id="@+id/Like"
+            android:layout_width="60dp"
+            android:layout_height="45sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="80dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_favourite"
+            app:layout_constraintTop_toBottomOf="@id/post"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+    <ImageView
+        android:id="@+id/Like_red"
+        android:layout_width="60dp"
+        android:layout_height="45sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+        android:padding="4dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_favouritered"
+        app:layout_constraintTop_toBottomOf="@id/post"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/Counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@id/Like"
+            app:layout_constraintTop_toBottomOf="@id/post"
+           />
+
+
+    <ImageView
+        android:id="@+id/comment"
+        android:layout_width="60dp"
+        android:layout_height="45sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="80dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_comment"
+        app:layout_constraintTop_toBottomOf="@id/post"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Like" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

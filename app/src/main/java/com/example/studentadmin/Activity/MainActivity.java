@@ -1,4 +1,4 @@
-package com.example.studentadmin;
+package com.example.studentadmin.Activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.studentadmin.fragment.PostsFragment;
+import com.example.studentadmin.fragment.QuaizFragment;
+import com.example.studentadmin.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {

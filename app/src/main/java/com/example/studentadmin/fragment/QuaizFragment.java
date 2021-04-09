@@ -1,4 +1,4 @@
-package com.example.studentadmin;
+package com.example.studentadmin.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.studentadmin.R;
 
 
 public class QuaizFragment extends Fragment {
