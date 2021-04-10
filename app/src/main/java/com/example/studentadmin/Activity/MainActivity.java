@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.studentadmin.fragment.PostsFragment;
+import com.example.studentadmin.fragment.PostsStudentFragment;
 import com.example.studentadmin.fragment.QuaizFragment;
 import com.example.studentadmin.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         // id
         chipNavigationBar = findViewById(R.id.bottom_nav_bar);
         //
-//kkk
+
 
         // NavigationBar
         chipNavigationBar.setItemSelected(R.id.nav_post, true);
@@ -39,9 +40,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_post:
                     fragment = new PostsFragment();
                     break;
+                case R.id.nav_post_student:
+                    fragment = new PostsStudentFragment();
+                    break;
                 case R.id.nav_quaiz:
                     fragment = new QuaizFragment();
                     break;
+
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment
                     , fragment).commit();

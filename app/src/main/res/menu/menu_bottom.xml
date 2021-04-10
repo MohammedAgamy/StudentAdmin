@@ -7,6 +7,11 @@
         android:title="Posts"
         app:cnb_iconColor="@color/colorPrimary"
         app:cnb_textColor="@color/black"/>
+    <item android:id="@+id/nav_post_student"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="StudentPosts"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/black"/>
     <item
         android:id="@+id/nav_quaiz"
         android:icon="@drawable/ic_baseline_format"
