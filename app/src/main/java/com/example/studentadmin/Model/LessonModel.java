@@ -9,7 +9,7 @@ public class LessonModel {
     public LessonModel() {
     }
 
-    public LessonModel(String nameLesson, String imageLesson, String key) {
+    public LessonModel(String nameLesson,String key) {
         this.nameLesson = nameLesson;
         this.imageLesson = imageLesson;
         Key = key;

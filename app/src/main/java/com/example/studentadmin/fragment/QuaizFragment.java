@@ -61,8 +61,7 @@ public class QuaizFragment extends Fragment {
     // Write a message to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+
     private RecyclerView recyclerView;
     private Dialog loadingDialog, categoryDialog;
     private CircleImageView addImage;
@@ -148,9 +147,9 @@ public class QuaizFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    list.add(snapshot1.getValue(LessonModel.class));
+                 //   list.add(snapshot1.getValue(LessonModel.class));
                     list.add(new LessonModel(snapshot1.child("nameLesson").getValue().toString(),
-                            snapshot1.child("imageLesson").getValue().toString(),
+                     //       snapshot1.child("imageLesson").getValue().toString(),
                             snapshot1.getKey()
                     ));
                 }
@@ -179,14 +178,14 @@ public class QuaizFragment extends Fragment {
         addImage = categoryDialog.findViewById(R.id.circle_image);
         lessonname = categoryDialog.findViewById(R.id.edit_category_name);
         addBtn = categoryDialog.findViewById(R.id.btn_add);
-
+/*
         addImage.setOnClickListener(view -> {
             Intent galleryintent = new Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryintent, 101);
         });
 
-
+ */
         addBtn.setOnClickListener(view -> {
             if (lessonname.getText() == null || lessonname.getText().toString().isEmpty()) {
                 lessonname.setError("name required");
@@ -198,17 +197,15 @@ public class QuaizFragment extends Fragment {
                     return;
                 }
             }
-
+/*
             if (image == null) {
                 Toast.makeText(getContext(), "Please Select Your Image", Toast.LENGTH_SHORT).show();
             }
 
-
+ */
             categoryDialog.dismiss();
-
-
-             uploadData();
-           // uploadLessonName();
+             //uploadData();
+            uploadLessonName();
           //  uploadProfileImage();
         });
     }
@@ -222,40 +219,6 @@ public class QuaizFragment extends Fragment {
             }
         }
     }
-    private void uploadData() {
-        loadingDialog.show();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference imageReference = storageReference.child("categories").child(image.getLastPathSegment());
-
-        UploadTask uploadTask = imageReference.putFile(image);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
-            if (!task.isSuccessful()) {
-                throw task.getException();
-            }
-
-            // Continue with the task to get the download URL
-            return imageReference.child("categories").getDownloadUrl().addOnCompleteListener(task1 -> {
-                if (task1.isSuccessful()) {
-                    downloadUrl = task1.getResult().toString();
-                    uploadLessonName();
-
-                } else {
-                    Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                } else {
-
-                    Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     private void uploadLessonName() {
         Map<String, Object> map = new HashMap<>();
@@ -263,13 +226,13 @@ public class QuaizFragment extends Fragment {
         map.put("imageLesson", downloadUrl);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("Lesson").child("lesson" + (list.size() ))
+        database.getReference().child("Lesson").child("lesson"+(list.size()+1 ))
                 .setValue(map)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         list.add(new LessonModel(lessonname.getText().toString()
-                                , downloadUrl
-                                , "lesson" + (list.size())));
+                             //   , downloadUrl
+                                , "lesson" + (list.size()+1)));
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
