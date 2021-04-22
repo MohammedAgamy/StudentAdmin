@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_post">
+
+    <fragment
+        android:id="@+id/nav_post"
+        android:name="com.example.studentadmin.fragment.PostsFragment"
+        android:label="@string/posts"
+        tools:layout="@layout/layout_post" />
+
+
+    <fragment
+        android:id="@+id/nav_post_student"
+        android:name="com.example.studentadmin.fragment.PostsStudentFragment"
+        android:label="@string/studentposts"
+        tools:layout="@layout/item_post_student" />
+
+    <fragment
+        android:id="@+id/nav_quaiz"
+        android:name="com.example.studentadmin.fragment.QuaizFragment"
+        android:label="@string/quize"
+        tools:layout="@layout/fragment_quaiz" />
+
+
+</navigation>

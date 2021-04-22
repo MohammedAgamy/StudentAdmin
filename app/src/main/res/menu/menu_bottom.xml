@@ -4,18 +4,18 @@
 
     <item android:id="@+id/nav_post"
         android:icon="@drawable/ic_baseline_post_add_24"
-        android:title="Posts"
+        android:title="@string/posts"
         app:cnb_iconColor="@color/colorPrimary"
         app:cnb_textColor="@color/black"/>
     <item android:id="@+id/nav_post_student"
         android:icon="@drawable/ic_baseline_post_add_24"
-        android:title="StudentPosts"
+        android:title="@string/studentposts"
         app:cnb_iconColor="@color/colorPrimary"
         app:cnb_textColor="@color/black"/>
     <item
         android:id="@+id/nav_quaiz"
         android:icon="@drawable/ic_baseline_format"
-        android:title="Quaiz"
+        android:title="@string/quize"
         app:cnb_iconColor="@color/colorPrimary"
         app:cnb_textColor="@color/black"
         />

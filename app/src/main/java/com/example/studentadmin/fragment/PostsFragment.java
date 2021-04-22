@@ -12,18 +12,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentadmin.Activity.MainActivity;
 import com.example.studentadmin.Adapter.PostAdapter;
 import com.example.studentadmin.Model.PostModel;
 import com.example.studentadmin.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -64,7 +64,8 @@ public class PostsFragment extends Fragment implements View.OnClickListener , Po
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
         iniView(view);
 
         RetriveData() ;
@@ -116,14 +117,10 @@ public class PostsFragment extends Fragment implements View.OnClickListener , Po
             postModel.setImage(null);
             postModel.setTime(date);
             fireStore.collection("AdminPosts").document(String.valueOf(Post_id)).set(postModel)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                    .addOnCompleteListener(task -> {
+                        Toast.makeText(getActivity(), "Post Create....", Toast.LENGTH_SHORT).show();
+                        mEPost.setText(null);
 
-                            Toast.makeText(getActivity(), "Post Create....", Toast.LENGTH_SHORT).show();
-                            mEPost.setText(null);
-
-                        }
                     });
         }
     }//end UploadPost

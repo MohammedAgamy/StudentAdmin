@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_box"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_image"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/student"
+        app:civ_border_color="@android:color/darker_gray"
+        app:civ_border_width="2dp"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tap above to select your image" />
+
+    <EditText
+        android:id="@+id/edit_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:padding="8dp"
+        android:elevation="1dp"
+
+        android:inputType="textPersonName"
+        android:hint="Category name"
+         />
+
+    <Button android:id="@+id/btn_add"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:background="@drawable/round_cornner"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"/>
+</LinearLayout>

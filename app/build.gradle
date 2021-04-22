@@ -37,6 +37,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:18.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-database:19.7.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.4'
+    implementation 'androidx.navigation:navigation-ui:2.3.4'
+    implementation 'com.google.firebase:firebase-storage:19.2.2'
+    implementation 'com.google.firebase:firebase-auth:20.0.4'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -53,10 +57,14 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
     implementation 'com.google.firebase:firebase-firestore'
 
-    //recyclerview
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
 
     // Anamation Lottio
     implementation "com.airbnb.android:lottie:3.6.0"
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // circleImage
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }
