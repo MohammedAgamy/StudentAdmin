@@ -27,6 +27,7 @@ import java.util.UUID;
 public class AddQuestionActivity extends AppCompatActivity {
     private EditText question;
     private RadioGroup options;
+
     private LinearLayout answer;
     private Button uploadBtn;
     private Dialog loadingDialog;
