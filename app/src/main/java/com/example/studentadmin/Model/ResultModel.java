@@ -5,6 +5,7 @@ public class ResultModel {
     private int score, total;
 
     public ResultModel() {
+
     }
 
     public ResultModel(String name, int score, int total) {

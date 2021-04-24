@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -41,7 +42,8 @@ public class ResultActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+        String title = getIntent().getStringExtra("title");
+        getSupportActionBar().setTitle(title);
 
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading);
@@ -60,11 +62,18 @@ public class ResultActivity extends AppCompatActivity {
         loadingDialog.show();
         myRef.child("score")
                 .child("nameLesson")
-                .child(getIntent().getStringExtra("title"))
+                .child(title)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            /*
+                           ResultModel orderDetails =snapshot1.child(title)
+                                    .getValue(ResultModel.class);
+
+
+                            list.add(orderDetails);
+                             */
                             list.add(snapshot1.getValue(ResultModel.class));
                         }
                         loadingDialog.dismiss();
