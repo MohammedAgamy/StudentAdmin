@@ -23,13 +23,15 @@ import java.util.List;
 public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.MyViewHolder> {
     private List<LessonModel> lessonModels;
     public DeleteListener deleteListener;
+    private ItemLessonListener itemLessonListener;
 
-    public LessonAdapter( List<LessonModel> lessonModels,DeleteListener deleteListener) {
+    public LessonAdapter( List<LessonModel> lessonModels
+            , ItemLessonListener itemLessonListener
+            ,DeleteListener deleteListener) {
         this.deleteListener=deleteListener;
         this.lessonModels = lessonModels;
+        this.itemLessonListener = itemLessonListener;
     }
-
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,7 +44,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.setDate(lessonModels.get(position).getImageLesson(), lessonModels.get(position).getNameLesson()
+        holder.setDate(lessonModels.get(position).getNameLesson()
                ,lessonModels.get(position).getKey(),position);
     }
 
@@ -61,25 +63,21 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.MyViewHold
             txt_nameCourse = itemView.findViewById(R.id.title);
             delete=itemView.findViewById(R.id.delete);
         }
-        private void setDate(final String url, final String title,final String Key,final int position) {
 
-            Picasso.get().load(url)
-                    .placeholder(R.drawable.student)
-                    .into(imageView);
+        private void setDate( final String title,final String Key,final int position) {
+
             this.txt_nameCourse.setText(title);
 
-            itemView.setOnClickListener(v -> {
-                Intent setIntent = new Intent(itemView.getContext(), QuastionActivity.class);
-                setIntent.putExtra("title", title);
-                setIntent.putExtra("Key", Key);
-                setIntent.putExtra("position", position);
-                itemView.getContext().startActivity(setIntent);
-            });
+            itemView.setOnClickListener(v ->
+                    itemLessonListener.onItemCourseClicked(lessonModels.get(position),position));
             delete.setOnClickListener(v ->
                     deleteListener.onDelete(Key,position));
         }
     }
     public interface DeleteListener{
-        public void onDelete(String Key,int position);
+       void onDelete(String Key,int position);
+    }
+    public interface ItemLessonListener{
+        void  onItemCourseClicked(LessonModel lessonModel, int position);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.studentadmin.Model;
 
 public class LessonModel {
-    private String nameLesson, imageLesson;
+    private String nameLesson;
     private String Key;
 
 
@@ -11,7 +11,6 @@ public class LessonModel {
 
     public LessonModel(String nameLesson,String key) {
         this.nameLesson = nameLesson;
-        this.imageLesson = imageLesson;
         Key = key;
     }
 
@@ -22,15 +21,6 @@ public class LessonModel {
     public void setNameLesson(String nameLesson) {
         this.nameLesson = nameLesson;
     }
-
-    public String getImageLesson() {
-        return imageLesson;
-    }
-
-    public void setImageLesson(String imageLesson) {
-        this.imageLesson = imageLesson;
-    }
-
     public String getKey() {
         return Key;
     }

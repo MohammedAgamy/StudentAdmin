@@ -85,7 +85,6 @@ public class QuastionActivity extends AppCompatActivity {
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 loadingDialog.show();
                                 myRef.child("SETS").child(lessonName)
                                         .child("question")

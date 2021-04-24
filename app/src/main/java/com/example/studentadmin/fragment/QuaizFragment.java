@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentadmin.Activity.MainActivity;
+import com.example.studentadmin.Activity.QuastionActivity;
 import com.example.studentadmin.Adapter.LessonAdapter;
 import com.example.studentadmin.Model.LessonModel;
 import com.example.studentadmin.R;
@@ -47,6 +48,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,40 +106,50 @@ public class QuaizFragment extends Fragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
-        adapter = new LessonAdapter(list, (Key, position) ->
-                new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Light_Dialog)
-                .setTitle("Delete Category")
-                .setMessage("Are you sure,you want to delete this category?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        myRef.child("Lesson").child(Key).removeValue().addOnCompleteListener(task -> {
 
-                            if (task.isSuccessful()) {
-                                myRef.child("SETS").child(list.get(position).getImageLesson()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            list.remove(position);
-                                            adapter.notifyDataSetChanged();
-                                        } else {
-                                            Toast.makeText(getContext(), "failed to delete", Toast.LENGTH_SHORT).show();
-                                        }
+        adapter=new LessonAdapter(list, this::onItemLessonClicked,
+                new LessonAdapter.DeleteListener() {
+            @Override
+            public void onDelete(String Key, int position) {
+                new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Light_Dialog)
+                        .setTitle("Delete Category")
+                        .setMessage("Are you sure,you want to delete this category?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                myRef.child("Lesson")
+                                        .child(Key).removeValue()
+                                        .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        myRef.child("SETS")
+                                                .child(Key)
+                                                .removeValue()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            list.remove(position);
+                                                            adapter.notifyDataSetChanged();
+                                                        } else {
+                                                            Toast.makeText(getContext(), "failed to delete", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                        loadingDialog.dismiss();
+                                                    }
+                                                });
+
+
+                                    } else {
+                                        Toast.makeText(getContext(), "failed to delete", Toast.LENGTH_SHORT).show();
                                         loadingDialog.dismiss();
                                     }
                                 });
-
-
-                            } else {
-                                Toast.makeText(getContext(), "failed to delete", Toast.LENGTH_SHORT).show();
-                                loadingDialog.dismiss();
                             }
-                        });
-                    }
-                })
-                .setNegativeButton("cancel", null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show());
+                        })
+                        .setNegativeButton("cancel", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         loadingDialog.show();
@@ -147,11 +159,9 @@ public class QuaizFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                 //   list.add(snapshot1.getValue(LessonModel.class));
-                    list.add(new LessonModel(snapshot1.child("nameLesson").getValue().toString(),
-                     //       snapshot1.child("imageLesson").getValue().toString(),
-                            snapshot1.getKey()
-                    ));
+                    list.add(snapshot1.getValue(LessonModel.class));
+
+
                 }
                 adapter.notifyDataSetChanged();
                 loadingDialog.dismiss();
@@ -167,6 +177,16 @@ public class QuaizFragment extends Fragment {
     }
 
 
+
+    public void onItemLessonClicked(LessonModel lessonModel, int position) {
+        Intent setIntent = new Intent(getContext(),QuastionActivity.class);
+        setIntent.putExtra("title", lessonModel.getNameLesson());
+        setIntent.putExtra("Key",lessonModel.getKey());
+        setIntent.putExtra("position", position);
+        getActivity().startActivity(setIntent);
+
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setLessonDialog() {
         categoryDialog = new Dialog(getContext());
@@ -178,14 +198,7 @@ public class QuaizFragment extends Fragment {
         addImage = categoryDialog.findViewById(R.id.circle_image);
         lessonname = categoryDialog.findViewById(R.id.edit_category_name);
         addBtn = categoryDialog.findViewById(R.id.btn_add);
-/*
-        addImage.setOnClickListener(view -> {
-            Intent galleryintent = new Intent(Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryintent, 101);
-        });
 
- */
         addBtn.setOnClickListener(view -> {
             if (lessonname.getText() == null || lessonname.getText().toString().isEmpty()) {
                 lessonname.setError("name required");
@@ -197,16 +210,11 @@ public class QuaizFragment extends Fragment {
                     return;
                 }
             }
-/*
-            if (image == null) {
-                Toast.makeText(getContext(), "Please Select Your Image", Toast.LENGTH_SHORT).show();
-            }
 
- */
             categoryDialog.dismiss();
-             //uploadData();
+
             uploadLessonName();
-          //  uploadProfileImage();
+
         });
     }
 
@@ -256,83 +264,3 @@ public class QuaizFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 }
-
-
-/*
-
-    private void uploadData() {
-        loadingDialog.show();
-         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-         StorageReference imageReference = storageReference.child("categories").child(image.getLastPathSegment());
-
-        UploadTask uploadTask = imageReference.putFile(image);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
-            if (!task.isSuccessful()) {
-                throw task.getException();
-            }
-
-            // Continue with the task to get the download URL
-            return imageReference.child("categories").getDownloadUrl().addOnCompleteListener(task1 -> {
-                if (task1.isSuccessful()) {
-                    downloadUrl = task1.getResult().toString();
-                    uploadLessonName();
-
-                } else {
-                    Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                } else {
-
-                    Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
- */
-/*
- private void uploadProfileImage() {
-        storageReference.child("ProfileImages").putFile(image)
-                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Profile image updated", Toast.LENGTH_SHORT).show();
-                            getProfileUrl();
-                        } else {
-                            String errorMessage = task.getException().getMessage();
-                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void getProfileUrl() {
-        storageReference.child("ProfileImages").child(auth.getUid()).getDownloadUrl()
-                .addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            downloadUrl = task.getResult().toString();
-
-                            Picasso.get().load(downloadUrl).centerCrop()
-                                    .into(addImage);
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("profileUrl", downloadUrl);
-                            uploadLessonName();
-
-                            //  SharedPreferences sharedPreferences.edit().putString("userProfileLink",image).apply();
-
-                        } else {
-                            String errorMessage = task.getException().getMessage();
-                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
- */

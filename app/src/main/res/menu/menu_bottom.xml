@@ -19,4 +19,11 @@
         app:cnb_iconColor="@color/colorPrimary"
         app:cnb_textColor="@color/black"
         />
+    <item
+        android:id="@+id/nav_result"
+        android:icon="@drawable/icons_result"
+        android:title="@string/the_result"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/black"
+        />
 </menu>

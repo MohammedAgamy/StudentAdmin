@@ -15,6 +15,7 @@ import com.example.studentadmin.fragment.PostsFragment;
 import com.example.studentadmin.fragment.PostsStudentFragment;
 import com.example.studentadmin.fragment.QuaizFragment;
 import com.example.studentadmin.R;
+import com.example.studentadmin.fragment.ResultFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -22,8 +23,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private ChipNavigationBar chipNavigationBar;
-    private AppBarConfiguration mAppBarConfiguration;
-    NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_quaiz:
                     fragment = new QuaizFragment();
-
                     break;
-
+                case R.id.nav_result:
+                    fragment = new ResultFragment();
+                    break;
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment
