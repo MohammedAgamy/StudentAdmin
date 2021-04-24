@@ -60,12 +60,12 @@ public class ResultActivity extends AppCompatActivity {
         loadingDialog.show();
         myRef.child("score")
                 .child("nameLesson")
+                .child(getIntent().getStringExtra("title"))
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             list.add(snapshot1.getValue(ResultModel.class));
-
                         }
                         loadingDialog.dismiss();
                         adapter.notifyDataSetChanged();
